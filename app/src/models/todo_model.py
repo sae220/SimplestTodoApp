@@ -28,6 +28,12 @@ class TodoUpdate(TodoBase):
 class TodoComplete(SQLModel):
     is_completed: bool
 
+    @validator('is_completed')
+    def is_completed_must_be_true(cls, value):
+        if not value:
+            raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail='is_completed must be true')
+        return value
+
 
 class TodoOut(TodoBase):
     id: UUID
