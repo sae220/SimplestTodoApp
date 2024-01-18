@@ -33,3 +33,8 @@ class TodoOut(TodoBase):
     id: UUID
     is_completed: bool
     created_at: datetime
+
+
+class DeletedTodo(TodoOut, table=True):
+    id: UUID = Field(primary_key=True)
+    deleted_at: datetime = Field(default_factory=datetime.now)

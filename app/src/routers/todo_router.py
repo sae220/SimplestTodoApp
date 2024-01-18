@@ -5,7 +5,7 @@ from fastapi import APIRouter, HTTPException, Response, status
 from sqlmodel import select
 
 from ..database import DatabaseSessionGetter
-from ..models.todo_model import TodoCreate, Todo, TodoUpdate, TodoComplete, TodoOut
+from ..models.todo_model import DeletedTodo, TodoCreate, Todo, TodoUpdate, TodoComplete, TodoOut
 
 
 router = APIRouter()
@@ -74,11 +74,14 @@ def complete_todo(session: DatabaseSessionGetter, todo_id: UUID, todo_in: TodoCo
 
 @router.delete('/{todo_id}')
 def delete_todo(session: DatabaseSessionGetter, todo_id: UUID) -> None:
-    '''Todoを削除する
+    '''Todoを論理削除する (削除されたTodoは別テーブルに保存)
     '''
     todo = session.get(Todo, todo_id)
     if not todo:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Todo not found')
     session.delete(todo)
+    deleted_todo = DeletedTodo.from_orm(todo)
+    session.add(deleted_todo)
     session.commit()
+    session.refresh(deleted_todo)
     return Response(status_code=status.HTTP_204_NO_CONTENT)
