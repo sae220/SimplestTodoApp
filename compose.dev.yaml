@@ -8,6 +8,12 @@ services:
       - "8000:8000"
     env_file:
       - ./.dev.env
+    environment:
+      - PYTHONDONTWRITEBYTECODE=1
+    volumes:
+      - type: bind
+        source: ./app/src
+        target: /opt/simplestTodoApp/app/src
   db:
     image: postgres:bullseye
     restart: always
