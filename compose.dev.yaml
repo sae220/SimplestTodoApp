@@ -1,0 +1,17 @@
+services:
+  app:
+    build: ./app
+    command: [uvicorn, src.main:app, --host, 0.0.0.0, --reload]
+    depends_on:
+      - db
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./.dev.env
+  db:
+    image: postgres:bullseye
+    restart: always
+    ports:
+      - "5432:5432"
+    env_file:
+      - ./.dev.env

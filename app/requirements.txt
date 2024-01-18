@@ -1,0 +1,3 @@
+fastapi[all]
+psycopg2_binary
+sqlmodel
