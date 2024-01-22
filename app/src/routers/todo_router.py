@@ -11,7 +11,7 @@ from ..models.todo_model import DeletedTodo, TodoCreate, Todo, TodoUpdate, TodoC
 router = APIRouter()
 
 
-@router.get('/', response_model=list[TodoOut])
+@router.get('', response_model=list[TodoOut])
 def read_todos_list(session: DatabaseSessionGetter) -> Any:
     '''Todoの一覧を取得する
     '''
@@ -32,7 +32,7 @@ def read_todo_from_id(session: DatabaseSessionGetter, todo_id: UUID) -> Any:
     return todo
 
 
-@router.post('/')
+@router.post('')
 def create_todo(session: DatabaseSessionGetter, todo_in: TodoCreate) -> Any:
     '''Todoを作成する
     '''
