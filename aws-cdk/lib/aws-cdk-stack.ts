@@ -1,16 +1,16 @@
 import * as cdk from 'aws-cdk-lib';
 import { Construct } from 'constructs';
-// import * as sqs from 'aws-cdk-lib/aws-sqs';
 
 export class AwsCdkStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
-    // The code that defines your stack goes here
+    // VPC・サブネット・セキュリティグループの作成
 
-    // example resource
-    // const queue = new sqs.Queue(this, 'BlogQueue', {
-    //   visibilityTimeout: cdk.Duration.seconds(300)
-    // });
+    // RDSの作成
+
+    // ECRの作成・Dockerイメージをプッシュ
+
+    // App Runner作成・独自ドメインの設定
   }
 }
